@@ -35,8 +35,18 @@ bot = Client(
 
 @bot.on_message(filters.command(["start"]))
 async def start(bot: Client, m: Message):
-    await m.reply_text(f"<b>Hello {m.from_user.mention} 👋\n\n I Am A Bot For Download Links From Your **.TXT** File And Then Upload That File On Telegram So Basically If You Want To Use Me First Send Me /upload Command And Then Follow Few Steps..\n\nUse /stop to stop any ongoing task.</b>")
-
+	
+    buttons = [[
+        InlineKeyboardButton("ɴᴇᴄʀᴏᴍᴀɴᴄᴇʀ", url = "https://t.me/VR_Necromancer")
+    ],[
+        InlineKeyboardButton('📡 sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ', url='https://t.me/vr_support'),
+        InlineKeyboardButton('📜 ᴜᴘᴅᴀᴛᴇ ᴄʜᴀɴɴᴇʟ', url='https://t.me/vr_unreal')
+    ],[
+        InlineKeyboardButton("❗️ʜᴇʟᴘ", callback_data='help')
+    ]]
+    reply_markup = InlineKeyboardMarkup(buttons)
+    await client.send_message(message.chat.id, f"<b>Hello {m.from_user.mention} 👋\n\n I Am A Bot For Download Links From Your **.TXT** File And Then Upload That File On Telegram So Basically If You Want To Use Me First Send Me /upload Command And Then Follow Few Steps..\n\nUse /stop to stop any ongoing task.</b>)
+    return
 
 @bot.on_message(filters.command("stop"))
 async def restart_handler(_, m):
