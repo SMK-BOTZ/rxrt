@@ -42,7 +42,7 @@ async def check_subscription(user_id: int):
         chat_member = await bot.get_chat_member(FORCE_CHANNEL, user_id)
         return chat_member.status in ["member", "administrator", "creator"]
     except PeerIdInvalid:
-        return False  # If the user does not exist or other errors occur
+        return  # If the user does not exist or other errors occur
 
 @bot.on_message(filters.command("start"))
 async def start(bot: Client, m: Message):
