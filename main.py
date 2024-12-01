@@ -47,11 +47,15 @@ async def start(bot: Client, m: Message):
     ]
     reply_markup = InlineKeyboardMarkup(buttons)
 
-    await m.reply_text(
-        f"<b>Hello {m.from_user.mention} 👋\n\n"
-        "I Am A Bot For Download Links From Your **.TXT** File And Then Upload That File On Telegram.\n\n"
-        "📝 Use /upload to start uploading your files.\n"
-        "🛑 Use /stop to stop any ongoing task.</b>",
+    # Path to the image you want to send
+    image_path = "https://graph.org/file/2776a44c4e5f3a94a5ebf-b0723b641e7705dc53.jpg"  # You can use a URL or file path
+
+    await m.reply_photo(
+        photo=image_path,  # Image URL or file path
+        caption=f"<b>Hello {m.from_user.mention} 👋\n\n"
+                "I Am A Bot For Download Links From Your **.TXT** File And Then Upload That File On Telegram.\n\n"
+                "📝 Use /upload to start uploading your files.\n"
+                "🛑 Use /stop to stop any ongoing task.</b>",
         reply_markup=reply_markup
     )
 
