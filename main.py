@@ -46,21 +46,6 @@ async def check_subscription(user_id: int):
 
 @bot.on_message(filters.command("start"))
 async def start(bot: Client, m: Message):
-    # Check if the user is subscribed to the required channel
-    is_subscribed = await check_subscription(m.from_user.id)
-    
-    if not is_subscribed:
-        # Send a message prompting the user to join the channel
-        await m.reply_text(
-            "⚠️ You must join the [Updates Channel](https://t.me/vr_unreal) to use this bot.\n\n"
-            "Please subscribe and then press the button below to proceed.",
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("Join Channel", url="https://t.me/vr_unreal")]
-            ])
-        )
-        return
-
-    # If the user is subscribed, proceed with the regular start message
     buttons = [
         [
             InlineKeyboardButton("🌟 Developer", url="https://t.me/VR_Necromancer"),
