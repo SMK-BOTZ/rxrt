@@ -1,7 +1,6 @@
 # Don't Remove Credit Tg - @VJ_Botz
 # Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
 # Ask Doubt on telegram @KingVJ01
-from plugins.forcesub import ForceSub
 
 import os
 import re
@@ -34,14 +33,34 @@ bot = Client(
     bot_token=BOT_TOKEN)
 
 
-@bot.on_message(filters.command(["start"]))
-async def start(bot: Client, m: Message):
+# Channel ID or username to force subscribe to
+FORCE_CHANNEL = "@Vr_unreal"  # Replace with your channel's username or ID
 
-    # Check for force subscription
-    Fsub = await ForceSub(client, message)
-    if Fsub == 400:
-        return
+async def check_subscription(user_id: int):
+    try:
+        # Check if the user is a member of the specified channel
+        chat_member = await bot.get_chat_member(FORCE_CHANNEL, user_id)
+        return chat_member.status in ["member", "administrator", "creator"]
+    except PeerIdInvalid:
+        return False  # If the user does not exist or other errors occur
+
+@bot.on_message(filters.command("start"))
+async def start(bot: Client, m: Message):
+    # Check if the user is subscribed to the required channel
+    is_subscribed = await check_subscription(m.from_user.id)
     
+    if not is_subscribed:
+        # Send a message prompting the user to join the channel
+        await m.reply_text(
+            "⚠️ You must join the [Updates Channel](https://t.me/vr_unreal) to use this bot.\n\n"
+            "Please subscribe and then press the button below to proceed.",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("Join Channel", url="https://t.me/vr_unreal")]
+            ])
+        )
+        return
+
+    # If the user is subscribed, proceed with the regular start message
     buttons = [
         [
             InlineKeyboardButton("🌟 Developer", url="https://t.me/VR_Necromancer"),
@@ -53,20 +72,17 @@ async def start(bot: Client, m: Message):
         ]
     ]
     reply_markup = InlineKeyboardMarkup(buttons)
-
-    # Path to the image you want to send
-    image_path = "https://graph.org/file/2776a44c4e5f3a94a5ebf-b0723b641e7705dc53.jpg"  # You can use a URL or file path
-
+    
+    # Send a photo and the welcome message with buttons
+    image_path = "https://graph.org/file/2776a44c4e5f3a94a5ebf-b0723b641e7705dc53.jpg"
     await m.reply_photo(
-        photo=image_path,  # Image URL or file path
+        photo=image_path,  # Image URL
         caption=f"<b>Hello {m.from_user.mention} 👋\n\n"
                 "I Am A Bot For Download Links From Your **.TXT** File And Then Upload That File On Telegram.\n\n"
                 "📝 Use /upload to start uploading your files.\n"
                 "🛑 Use /stop to stop any ongoing task.</b>",
         reply_markup=reply_markup
     )
-
-
 
 @bot.on_message(filters.command("stop"))
 async def restart_handler(_, m):
