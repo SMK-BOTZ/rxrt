@@ -1,6 +1,7 @@
 # Don't Remove Credit Tg - @VJ_Botz
 # Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
 # Ask Doubt on telegram @KingVJ01
+from plugins.forcesub import ForceSub
 
 import os
 import re
@@ -35,6 +36,12 @@ bot = Client(
 
 @bot.on_message(filters.command(["start"]))
 async def start(bot: Client, m: Message):
+
+    # Check for force subscription
+    Fsub = await ForceSub(client, message)
+    if Fsub == 400:
+        return
+    
     buttons = [
         [
             InlineKeyboardButton("🌟 Developer", url="https://t.me/VR_Necromancer"),
