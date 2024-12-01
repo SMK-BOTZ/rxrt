@@ -46,16 +46,14 @@ async def check_subscription(user_id: int):
 
 @bot.on_message(filters.command("start"))
 async def start(bot: Client, m: Message):
-    buttons = [
-        [
-            InlineKeyboardButton("🌟 Developer", url="https://t.me/VR_Necromancer"),
-            InlineKeyboardButton("📢 Updates", url="https://t.me/vr_unreal")
-        ],
-        [
-            InlineKeyboardButton("💬 Support Group", url="https://t.me/vr_support"),
-            InlineKeyboardButton("❓ Help", callback_data="help")
-        ]
-    ]
+    buttons = [[
+        InlineKeyboardButton("ɴᴇᴄʀᴏᴍᴀɴᴄᴇʀ", url = "https://t.me/VR_Necromancer")
+    ],[
+        InlineKeyboardButton('📡 sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ', url='https://t.me/vr_support'),
+        InlineKeyboardButton('📜 ᴜᴘᴅᴀᴛᴇ ᴄʜᴀɴɴᴇʟ', url='https://t.me/vr_unreal')
+    ],[
+        InlineKeyboardButton("❗️ʜᴇʟᴘ", callback_data='help')
+    ]]
     reply_markup = InlineKeyboardMarkup(buttons)
     
     # Send a photo and the welcome message with buttons
